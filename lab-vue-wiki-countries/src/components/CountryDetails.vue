@@ -47,45 +47,32 @@
   import { useRoute } from "vue-router";
 
   const countryInfo = ref(null);
- 
-  const name = ref();
-  const capital = ref();
-  const area = ref();
-  const borders = ref();
-  
-  const alpha3Code = ref();
-  
-  const alpha2Code = ref();
-  
- 
+
   const route = useRoute();
   
   const getCountryByAlphaCode = async () => {
 
     const alpha3Code = route.params.alpha3Code;
+    console.log(alpha3Code);
   
     const response = await fetch(
       `https://ih-countries-api.herokuapp.com/countries/${alpha3Code}`
     );
   
     const finalResponse = await response.json();
-  
-    const name = finalResponse.name.common;
-    const capital = finalResponse.capital[0];
-    const area = finalResponse.area;
-    const borders = finalResponse.borders;
-    const alpha2Code = finalResponse.alpha2Code;
+    console.log(finalResponse);
   
     countryInfo.value = finalResponse;
   
-    return { name, capital, borders, area, alpha2Code, countryInfo };
+    return { countryInfo };
   };
   
   onMounted(() => {
     getCountryByAlphaCode();
   });
 
-  const countryCode = computed(() => {
+const countryCode = computed(() => {
+  
     return route.params.alpha3Code;
   });
   
@@ -93,7 +80,5 @@
     getCountryByAlphaCode();
   });
   
-  //onMounted Hook
   </script>
-  
-  <style></style>
+ 
